@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+// import { useReducer } from "react";
 import {
   UPDATE_PRODUCTS,
   ADD_TO_CART,
@@ -8,11 +8,20 @@ import {
   UPDATE_CATEGORIES,
   UPDATE_CURRENT_CATEGORY,
   CLEAR_CART,
-  TOGGLE_CART
+  TOGGLE_CART,
 } from "./actions";
 
-export const reducer = (state, action) => {
+const initialState = {
+  products: [],
+  categories: [],
+  cartOpen: false,
+  cart: [],
+  currentCategory: "",
+};
+
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    // if action type value is the value of `UPDATE_PRODUCTS`, return a new state object with an updated products array
     case UPDATE_PRODUCTS:
       return {
         ...state,
@@ -36,36 +45,36 @@ export const reducer = (state, action) => {
       return {
         ...state,
         cartOpen: true,
-        cart: state.cart.map(product => {
+        cart: state.cart.map((product) => {
           if (action._id === product._id) {
-            product.purchaseQuantity = action.purchaseQuantity
+            product.purchaseQuantity = action.purchaseQuantity;
           }
-          return product
-        })
+          return product;
+        }),
       };
 
     case REMOVE_FROM_CART:
-      let newState = state.cart.filter(product => {
+      let newState = state.cart.filter((product) => {
         return product._id !== action._id;
       });
 
       return {
         ...state,
         cartOpen: newState.length > 0,
-        cart: newState
+        cart: newState,
       };
 
     case CLEAR_CART:
       return {
         ...state,
         cartOpen: false,
-        cart: []
+        cart: [],
       };
 
     case TOGGLE_CART:
       return {
         ...state,
-        cartOpen: !state.cartOpen
+        cartOpen: !state.cartOpen,
       };
 
     case UPDATE_CATEGORIES:
@@ -77,8 +86,8 @@ export const reducer = (state, action) => {
     case UPDATE_CURRENT_CATEGORY:
       return {
         ...state,
-        currentCategory: action.currentCategory
-      }
+        currentCategory: action.currentCategory,
+      };
 
     default:
       return state;
@@ -86,5 +95,5 @@ export const reducer = (state, action) => {
 };
 
 export function useProductReducer(initialState) {
-  return useReducer(reducer, initialState)
+  return useReducer(reducer, initialState);
 }
