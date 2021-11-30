@@ -1,4 +1,5 @@
-// import { useReducer } from "react";
+import { useReducer } from "react";
+
 import {
   UPDATE_PRODUCTS,
   ADD_TO_CART,
@@ -19,7 +20,7 @@ const initialState = {
   currentCategory: "",
 };
 
-const rootReducer = (state = initialState, action) => {
+export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     // if action type value is the value of `UPDATE_PRODUCTS`, return a new state object with an updated products array
     case UPDATE_PRODUCTS:
@@ -95,5 +96,5 @@ const rootReducer = (state = initialState, action) => {
 };
 
 export function useProductReducer(initialState) {
-  return useReducer(reducer, initialState);
+  return useReducer(rootReducer, initialState);
 }

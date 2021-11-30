@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
-import { ADD_USER } from '../utils/mutations';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import Auth from "../utils/auth";
+import { ADD_USER } from "../utils/mutations";
 
 function Signup(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [addUser] = useMutation(ADD_USER);
+  const [formState, setFormState] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
+  const [addUser] = useMutation(ADD_USER);
+  // or;
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const mutationResponse = await addUser({
@@ -77,7 +83,9 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={handleFormSubmit}>
+            Submit
+          </button>
         </div>
       </form>
     </div>
